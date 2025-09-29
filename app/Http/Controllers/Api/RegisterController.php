@@ -8,6 +8,52 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @OA\Post(
+ *     path="/api/register",
+ *     summary="Cadastro de usuário",
+ *     tags={"Auth"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"name","email","password"},
+ *             @OA\Property(property="name", type="string", example="Camila Silva"),
+ *             @OA\Property(property="email", type="string", format="email", example="camila@exemplo.com"),
+ *             @OA\Property(property="password", type="string", format="password", example="12345678")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=201,
+ *         description="Registro realizado com sucesso",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="message", type="string", example="Registro realizado com sucesso!"),
+ *             @OA\Property(property="user", type="object",
+ *                 @OA\Property(property="id", type="integer", example=1),
+ *                 @OA\Property(property="name", type="string", example="Camila Silva"),
+ *                 @OA\Property(property="email", type="string", example="camila@exemplo.com")
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=422,
+ *         description="Erro de validação",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="errors", type="object",
+ *                 @OA\Property(property="name", type="array",
+ *                     @OA\Items(type="string", example="O campo nome é obrigatório")
+ *                 ),
+ *                 @OA\Property(property="email", type="array",
+ *                     @OA\Items(type="string", example="Esse e-mail já está cadastrado no sistema")
+ *                 ),
+ *                 @OA\Property(property="password", type="array",
+ *                     @OA\Items(type="string", example="A senha deve ter pelo menos 8 caracteres")
+ *                 )
+ *             )
+ *         )
+ *     )
+ * )
+ */
+
 class RegisterController extends Controller
 {
     /**

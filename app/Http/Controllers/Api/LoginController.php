@@ -6,12 +6,39 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+/**
+ * @OA\Post(
+ *     path="/api/login",
+ *     summary="Login de usuário",
+ *     tags={"Auth"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"email","password"},
+ *             @OA\Property(property="email", type="string", example="usuario@exemplo.com"),
+ *             @OA\Property(property="password", type="string", example="12345678")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Login realizado com sucesso"
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="E-mail ou senha inválidos"
+ *     )
+ * )
+ */
+
 
 class LoginController extends Controller
 {
+
+
     /**
      * Login e geração de token
      */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -40,6 +67,24 @@ class LoginController extends Controller
     /**
      * Logout e revogação do token
      */
+
+        /**
+     * @OA\Post(
+     *     path="/api/logout",
+     *     summary="Logout de usuário",
+     *     tags={"Auth"},
+     *     security={{"sanctum": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Logout realizado com sucesso"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Não autorizado"
+     *     )
+     * )
+     */
+
     public function destroy(Request $request)
     {
         // Revoga apenas o token usado na requisição

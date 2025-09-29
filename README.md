@@ -17,3 +17,15 @@ Instalar o Laravel Sanctum para a API
 ```
 php artisan install:api
 ```
+Gerar a documentação com Swagger
+```
+ php artisan l5-swagger:generate
+```
+Rodar o servidor
+```
+php artisan serve --port=8001
+```
+Rodar o servidor para o Rafael acessar na mesma rede
+```
+php artisan serve --host=0.0.0.0 --port=8001
+```
