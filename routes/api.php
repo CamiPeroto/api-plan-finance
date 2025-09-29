@@ -26,7 +26,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('entrada/{id}', [AvailableMoneyController::class, 'destroy']);
 
     // Despesas (Finance)
-    Route::get('despesa', [FinanceController::class, 'spentMoney']);
+    Route::get('despesa', [FinanceController::class, 'index']);
     Route::post('despesa/search', [FinanceController::class, 'search']);
     Route::post('despesa', [FinanceController::class, 'store']);
     Route::get('despesa/{id}', [FinanceController::class, 'show']);

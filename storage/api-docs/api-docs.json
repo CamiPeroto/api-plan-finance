@@ -5,6 +5,768 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/entrada": {
+            "get": {
+                "tags": [
+                    "AvailableMoney"
+                ],
+                "summary": "Lista entradas do mês atual com paginação",
+                "operationId": "9151f16c49de230a5e01bb1d4a184a83",
+                "responses": {
+                    "200": {
+                        "description": "Lista de entradas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AvailableMoney"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "AvailableMoney"
+                ],
+                "summary": "Cria nova entrada",
+                "operationId": "6e750a545b843b39a06a857a306be5b4",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "to_spend",
+                                    "date"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Salário"
+                                    },
+                                    "to_spend": {
+                                        "type": "number",
+                                        "example": 2500
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-09-28"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Entrada adicionada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AvailableMoney"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/entrada/{id}": {
+            "get": {
+                "tags": [
+                    "AvailableMoney"
+                ],
+                "summary": "Mostra uma entrada específica",
+                "operationId": "a3462825de1a0efed4670def439d44ee",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Entrada encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AvailableMoney"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Entrada não encontrada"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "AvailableMoney"
+                ],
+                "summary": "Atualiza uma entrada existente",
+                "operationId": "943e70fb1f1c581a52666c4b85b595ed",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "to_spend",
+                                    "date"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Salário Atualizado"
+                                    },
+                                    "to_spend": {
+                                        "type": "number",
+                                        "example": 3000
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-09-28"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Entrada atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AvailableMoney"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Entrada não encontrada"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "AvailableMoney"
+                ],
+                "summary": "Deleta uma entrada",
+                "operationId": "6b4bf794d3702644dd4996610a4d43ca",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Entrada deletada com sucesso"
+                    },
+                    "404": {
+                        "description": "Entrada não encontrada"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/entrada/search": {
+            "get": {
+                "tags": [
+                    "AvailableMoney"
+                ],
+                "summary": "Busca entradas por nome ou valor",
+                "operationId": "d97708aef7226530755d856c810a197f",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Salário"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultados da busca",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AvailableMoney"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/categoria": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Lista categorias do usuário",
+                "operationId": "bcc67b73090178a4327680bee3a3385a",
+                "responses": {
+                    "200": {
+                        "description": "Lista de categorias",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Category"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Cria nova categoria",
+                "operationId": "3c2fcc5123faaf7bb6ddae15baf979aa",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Transporte"
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "example": "#00FF00"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Categoria criada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categoria/{id}": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Mostra detalhes de uma categoria",
+                "operationId": "aec54b8ccbfbb50ab5988b649b20f131",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da categoria",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Categoria encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Categoria não encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Atualiza uma categoria",
+                "operationId": "cfe317fc6f34499ba3d45efd57657d81",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da categoria",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Transporte Atualizado"
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "example": "#0000FF"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Categoria atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Deleta uma categoria",
+                "operationId": "b6d170baa143bdce87f8a827ea548799",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da categoria",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Categoria deletada com sucesso"
+                    }
+                }
+            }
+        },
+        "/api/categoria/search": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Busca categorias por nome",
+                "operationId": "283a2aae9b7a24e9e5e79a432444066e",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Termo de busca",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de categorias filtradas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Category"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/despesa": {
+            "get": {
+                "tags": [
+                    "Finance"
+                ],
+                "summary": "Lista despesas do mês atual",
+                "operationId": "c07e6053bb5d89892d3633bc193d6813",
+                "responses": {
+                    "200": {
+                        "description": "Lista de despesas com saldo disponível",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "finances": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Finance"
+                                            }
+                                        },
+                                        "available_money": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AvailableMoney"
+                                            }
+                                        },
+                                        "diff": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 250.5
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Finance"
+                ],
+                "summary": "Cria nova despesa",
+                "operationId": "84f773edb67f0bd59219094a8884d8dc",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "value",
+                                    "date",
+                                    "available_money_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Compra supermercado"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Compra semanal"
+                                    },
+                                    "value": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 150.75
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-09-28"
+                                    },
+                                    "available_money_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "categories_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "payments_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "payable": {
+                                        "type": "boolean",
+                                        "example": false
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Despesa criada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Finance"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/despesa/{id}": {
+            "get": {
+                "tags": [
+                    "Finance"
+                ],
+                "summary": "Mostra detalhes de uma despesa",
+                "operationId": "e90278dab61b239945b93a481a7c21d4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da despesa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Despesa encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Finance"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Despesa não encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Finance"
+                ],
+                "summary": "Atualiza uma despesa",
+                "operationId": "b43f988c072cd43c0509754fb0423bfa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da despesa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "value",
+                                    "date",
+                                    "available_money_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Compra supermercado"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Compra semanal"
+                                    },
+                                    "value": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 200
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-10-01"
+                                    },
+                                    "available_money_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "categories_id": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "payments_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "payable": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Despesa atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Finance"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Despesa não encontrada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Finance"
+                ],
+                "summary": "Deleta uma despesa",
+                "operationId": "a9946cb97ebf1df9bac24eb0cbf748d3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da despesa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Despesa deletada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Despesa deletada com sucesso"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Despesa não encontrada"
+                    }
+                }
+            }
+        },
         "/api/login": {
             "post": {
                 "tags": [
@@ -183,6 +945,185 @@
         }
     },
     "components": {
+        "schemas": {
+            "AvailableMoney": {
+                "title": "AvailableMoney",
+                "required": [
+                    "id",
+                    "user_id",
+                    "name",
+                    "to_spend",
+                    "date"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Saldo inicial"
+                    },
+                    "to_spend": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 1000.5
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-09-28"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-09-28T10:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-09-28T10:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "Payment": {
+                "title": "Payment",
+                "required": [
+                    "id",
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Cartão de crédito"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-09-28T10:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-09-28T10:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "Category": {
+                "title": "Category",
+                "required": [
+                    "id",
+                    "user_id",
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Alimentação"
+                    },
+                    "color": {
+                        "type": "string",
+                        "example": "#FF0000"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-09-28T10:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-09-28T10:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "Finance": {
+                "title": "Despesa",
+                "required": [
+                    "id",
+                    "name",
+                    "value",
+                    "date",
+                    "available_money_id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Compra supermercado"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Compra semanal de alimentos"
+                    },
+                    "value": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 150.75
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-09-28"
+                    },
+                    "payable": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "available_money_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "categories_id": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "payments_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "category": {
+                        "$ref": "#/components/schemas/Category"
+                    },
+                    "payment": {
+                        "$ref": "#/components/schemas/Payment"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-09-28T10:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-09-28T10:00:00Z"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "bearerAuth": {
                 "type": "http",
@@ -200,6 +1141,18 @@
         }
     },
     "tags": [
+        {
+            "name": "AvailableMoney",
+            "description": "AvailableMoney"
+        },
+        {
+            "name": "Category",
+            "description": "Category"
+        },
+        {
+            "name": "Finance",
+            "description": "Finance"
+        },
         {
             "name": "Auth",
             "description": "Auth"

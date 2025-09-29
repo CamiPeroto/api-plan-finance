@@ -16,9 +16,22 @@ class AvailableMoneyController extends Controller
     {
         $this->objAvailableMoney = new AvailableMoney();
     }
-
     /**
-     * Lista entradas do mês atual com paginação
+     * @OA\Get(
+     *     path="/api/entrada",
+     *     summary="Lista entradas do mês atual com paginação",
+     *     tags={"AvailableMoney"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de entradas",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/AvailableMoney"))
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Não autorizado"
+     *     )
+     * )
      */
     public function index()
     {
@@ -40,7 +53,34 @@ class AvailableMoneyController extends Controller
     }
 
     /**
-     * Cria nova entrada
+     * @OA\Post(
+     *     path="/api/entrada",
+     *     summary="Cria nova entrada",
+     *     tags={"AvailableMoney"},
+     *     security={{"sanctum": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name","to_spend","date"},
+     *             @OA\Property(property="name", type="string", example="Salário"),
+     *             @OA\Property(property="to_spend", type="number", example=2500.00),
+     *             @OA\Property(property="date", type="string", format="date", example="2025-09-28")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Entrada adicionada com sucesso",
+     *         @OA\JsonContent(ref="#/components/schemas/AvailableMoney")
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Erro de validação"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Não autorizado"
+     *     )
+     * )
      */
     public function store(Request $request)
     {
@@ -48,10 +88,6 @@ class AvailableMoneyController extends Controller
             'name'     => 'required|string|max:255',
             'to_spend' => 'required|numeric',
             'date'     => 'required|date',
-        ], [
-            'name.required'     => 'O campo NOME é obrigatório!',
-            'to_spend.required' => 'O campo VALOR é obrigatório!',
-            'date.required'     => 'O campo DATA é obrigatório!',
         ]);
 
         $entry = $this->objAvailableMoney->create([
@@ -68,7 +104,31 @@ class AvailableMoneyController extends Controller
     }
 
     /**
-     * Mostra uma entrada específica
+     * @OA\Get(
+     *     path="/api/entrada/{id}",
+     *     summary="Mostra uma entrada específica",
+     *     tags={"AvailableMoney"},
+     *     security={{"sanctum": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Entrada encontrada",
+     *         @OA\JsonContent(ref="#/components/schemas/AvailableMoney")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Entrada não encontrada"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Não autorizado"
+     *     )
+     * )
      */
     public function show($id)
     {
@@ -82,7 +142,40 @@ class AvailableMoneyController extends Controller
     }
 
     /**
-     * Atualiza uma entrada existente
+     * @OA\Put(
+     *     path="/api/entrada/{id}",
+     *     summary="Atualiza uma entrada existente",
+     *     tags={"AvailableMoney"},
+     *     security={{"sanctum": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name","to_spend","date"},
+     *             @OA\Property(property="name", type="string", example="Salário Atualizado"),
+     *             @OA\Property(property="to_spend", type="number", example=3000.00),
+     *             @OA\Property(property="date", type="string", format="date", example="2025-09-28")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Entrada atualizada com sucesso",
+     *         @OA\JsonContent(ref="#/components/schemas/AvailableMoney")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Entrada não encontrada"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Não autorizado"
+     *     )
+     * )
      */
     public function update(Request $request, $id)
     {
@@ -109,7 +202,30 @@ class AvailableMoneyController extends Controller
     }
 
     /**
-     * Deleta uma entrada
+     * @OA\Delete(
+     *     path="/api/entrada/{id}",
+     *     summary="Deleta uma entrada",
+     *     tags={"AvailableMoney"},
+     *     security={{"sanctum": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Entrada deletada com sucesso"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Entrada não encontrada"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Não autorizado"
+     *     )
+     * )
      */
     public function destroy($id)
     {
@@ -125,7 +241,27 @@ class AvailableMoneyController extends Controller
     }
 
     /**
-     * Busca entradas por nome ou valor
+     * @OA\Get(
+     *     path="/api/entrada/search",
+     *     summary="Busca entradas por nome ou valor",
+     *     tags={"AvailableMoney"},
+     *     security={{"sanctum": {}}},
+     *     @OA\Parameter(
+     *         name="search",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(type="string", example="Salário")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Resultados da busca",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/AvailableMoney"))
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Não autorizado"
+     *     )
+     * )
      */
     public function search(Request $request)
     {

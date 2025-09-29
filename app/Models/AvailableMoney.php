@@ -6,23 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SpentMoney extends Model
+class AvailableMoney extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'spent_money';
+    protected $table = 'available_money'; // confirme se sua migration usou esse nome
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     protected $fillable = [
         'user_id',
-        'available_money_id',
-        'categories_id',
-        'payments_id',
         'name',
-        'description',
-        'value',
-        'payable',
+        'to_spend',
         'date',
         'created_at',
         'updated_at',
@@ -30,16 +25,24 @@ class SpentMoney extends Model
     ];
 
     /**
-     * Garante que o valor seja armazenado como double
+     * Formata e garante que o valor "to_spend" seja salvo como double
      */
-    public function setValueAttribute($value)
+    public function setToSpendAttribute($value)
     {
         $cleanValue = preg_replace('/[^\d.]/', '', str_replace(',', '.', $value));
-        $this->attributes['value'] = (double) $cleanValue;
+        $this->attributes['to_spend'] = (double) $cleanValue;
     }
 
     /**
-     * Relação com usuário
+     * Relação com os gastos (SpentMoney)
+     */
+    public function spentMoney()
+    {
+        return $this->hasMany(SpentMoney::class, 'available_money_id', 'id');
+    }
+
+    /**
+     * Relação com o usuário
      */
     public function user()
     {
@@ -47,35 +50,10 @@ class SpentMoney extends Model
     }
 
     /**
-     * Relação com categoria
-     */
-    public function relCategory()
-    {
-        return $this->hasOne(Category::class, 'id', 'categories_id');
-    }
-
-    /**
-     * Relação com pagamento
-     */
-    public function relPayment()
-    {
-        return $this->hasOne(Payment::class, 'id', 'payments_id');
-    }
-
-    /**
-     * Relação com AvailableMoney
-     */
-    public function relAvailableMoney()
-    {
-        return $this->hasOne(AvailableMoney::class, 'id', 'available_money_id');
-    }
-
-    /**
-     * Formatação de datas para API
+     * Casts para API
      */
     protected $casts = [
-        'date' => 'datetime:Y-m-d',
-        'value' => 'double',
-        'payable' => 'boolean',
+        'date'      => 'datetime:Y-m-d',
+        'to_spend'  => 'double',
     ];
 }
