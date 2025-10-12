@@ -56,21 +56,19 @@ class FinanceController extends Controller
             // ->whereYear('date', $currentYear)
             ->with(['relCategory', 'relPayment'])
             ->orderBy('date', 'desc')
-            ->paginate(6);
+            ->get();
 
         $available_moneys = $this->objAvailableMoney
             ->where('user_id', Auth::id())
-            ->paginate(15);
+            ->get();
 
         $diff = $available_moneys->sum('to_spend') - $finances->sum('value');
 
         return response()->json([
             'finances' => $finances,
-            'available_money' => $available_moneys,
             'diff' => $diff,
         ], 200);
     }
-
 
     /**
      * @OA\Post(

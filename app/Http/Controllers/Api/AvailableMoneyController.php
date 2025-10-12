@@ -43,7 +43,7 @@ class AvailableMoneyController extends Controller
             // ->whereMonth('date', $currentMonth)
             // ->whereYear('date', $currentYear)
             ->orderBy('date', 'desc')
-            ->paginate(10);
+            ->get();
 
         $availableMoneys->each(function ($entry) {
             $entry->formatted_date = Carbon::parse($entry->date)->format('d/m/Y');
