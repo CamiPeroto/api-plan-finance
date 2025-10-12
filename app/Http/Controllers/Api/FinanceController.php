@@ -52,15 +52,15 @@ class FinanceController extends Controller
 
         $finances = $this->objSpentMoney
             ->where('user_id', Auth::id())
-            ->whereMonth('date', $currentMonth)
-            ->whereYear('date', $currentYear)
+            // ->whereMonth('date', $currentMonth)
+            // ->whereYear('date', $currentYear)
             ->with(['relCategory', 'relPayment'])
             ->orderBy('date', 'desc')
             ->paginate(6);
 
         $available_moneys = $this->objAvailableMoney
             ->where('user_id', Auth::id())
-            ->paginate(6);
+            ->paginate(15);
 
         $diff = $available_moneys->sum('to_spend') - $finances->sum('value');
 
