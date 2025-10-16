@@ -830,6 +830,181 @@
                 ]
             }
         },
+        "/api/pagamento": {
+            "get": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Listar todos os métodos de pagamento",
+                "operationId": "2913cd103c55eb22ddd9fdc4b17038f8",
+                "responses": {
+                    "200": {
+                        "description": "Lista de métodos de pagamento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Payment"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Criar um novo método de pagamento",
+                "operationId": "008c2f52dc6a915f690e08b233ceb101",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Cartão de Crédito"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Método de pagamento criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Payment"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação"
+                    }
+                }
+            }
+        },
+        "/api/pagamento/{id}": {
+            "get": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Exibir um método de pagamento específico",
+                "operationId": "1fc30d5686f3c0580d9a9e37a9d4e9d4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do método de pagamento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dados do método de pagamento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Payment"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Método de pagamento não encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Atualizar um método de pagamento",
+                "operationId": "c5fca6d799e9932a5c8a7a3b581d3be0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do método de pagamento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Pix"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Método de pagamento atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Payment"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Método de pagamento não encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Excluir um método de pagamento",
+                "operationId": "1178f4a564b660403f3053032f860002",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do método de pagamento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Método de pagamento excluído com sucesso"
+                    },
+                    "404": {
+                        "description": "Método de pagamento não encontrado"
+                    }
+                }
+            }
+        },
         "/api/register": {
             "post": {
                 "tags": [
@@ -1141,6 +1316,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Payments",
+            "description": "Gerenciamento de métodos de pagamento"
+        },
         {
             "name": "AvailableMoney",
             "description": "AvailableMoney"

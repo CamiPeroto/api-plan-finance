@@ -23,9 +23,6 @@ class Payment extends Model
         return $this->hasMany(SpentMoney::class, 'payments_id');
     }
 
-    /**
-     * Casts opcionais para API (se quiser forçar tipos)
-     */
     protected $casts = [
         'id' => 'integer',
         'name' => 'string',

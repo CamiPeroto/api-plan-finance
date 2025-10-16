@@ -79,6 +79,7 @@ namespace App\Http\Controllers;
  *     @OA\Property(property="created_at", type="string", format="date-time", example="2025-09-28T10:00:00Z"),
  *     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-09-28T10:00:00Z")
  * )
+ * 
  */
 
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AvailableMoneyController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FinanceController;
 use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\RegisterController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,4 +41,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('categoria/{id}', [CategoryController::class, 'show']);
     Route::put('categoria/{id}', [CategoryController::class, 'update']);
     Route::delete('categoria/{id}', [CategoryController::class, 'destroy']);
+
+    // Pagamentos
+    Route::get('pagamento', [PaymentController::class, 'index']);
+    Route::post('pagamento/search', [PaymentController::class, 'search']);
+    Route::post('pagamento', [PaymentController::class, 'store']);
+    Route::get('pagamento/{id}', [PaymentController::class, 'show']);
+    Route::put('pagamento/{id}', [PaymentController::class, 'update']);
+    Route::delete('pagamento/{id}', [PaymentController::class, 'destroy']);
 });
