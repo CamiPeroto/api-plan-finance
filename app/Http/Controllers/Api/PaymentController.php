@@ -26,7 +26,7 @@ class PaymentController extends Controller
      *     )
      * )
      */
-    public function index(): Response
+    public function index()
     {
         $payments = Payment::withCount('relSpentMoney')
             ->orderBy('name')

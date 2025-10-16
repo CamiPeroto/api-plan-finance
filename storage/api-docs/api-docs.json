@@ -839,17 +839,7 @@
                 "operationId": "2913cd103c55eb22ddd9fdc4b17038f8",
                 "responses": {
                     "200": {
-                        "description": "Lista de métodos de pagamento",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Payment"
-                                    }
-                                }
-                            }
-                        }
+                        "description": "Lista de métodos de pagamento"
                     }
                 }
             },
@@ -880,16 +870,9 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Método de pagamento criado com sucesso",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Payment"
-                                }
-                            }
-                        }
+                        "description": "Método de pagamento criado com sucesso"
                     },
-                    "400": {
+                    "422": {
                         "description": "Erro de validação"
                     }
                 }
@@ -915,14 +898,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Dados do método de pagamento",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Payment"
-                                }
-                            }
-                        }
+                        "description": "Dados do método de pagamento"
                     },
                     "404": {
                         "description": "Método de pagamento não encontrado"
@@ -964,14 +940,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Método de pagamento atualizado com sucesso",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Payment"
-                                }
-                            }
-                        }
+                        "description": "Método de pagamento atualizado com sucesso"
                     },
                     "404": {
                         "description": "Método de pagamento não encontrado"
