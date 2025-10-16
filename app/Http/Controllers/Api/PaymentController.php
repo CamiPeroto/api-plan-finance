@@ -57,7 +57,7 @@ class PaymentController extends Controller
      *     )
      * )
      */
-    public function store(Request $request): Response
+    public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:payments,name',
@@ -90,7 +90,7 @@ class PaymentController extends Controller
      *     )
      * )
      */
-    public function show(Payment $payment): Response
+    public function show(Payment $payment)
     {
         $payment->loadCount('relSpentMoney');
 
